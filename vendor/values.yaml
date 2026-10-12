@@ -1,0 +1,20 @@
+# Values for the traefik/traefik chart. Plain Ingress objects, no CRDs.
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+service:
+  spec:
+    type: NodePort
+ports:
+  web:
+    nodePort: 30080
+  websecure:
+    nodePort: 30443
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowExternalNameServices: true
+  kubernetesIngress:
+    enabled: true
+    publishedService:
+      enabled: false
