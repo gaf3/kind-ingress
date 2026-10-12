@@ -1,6 +1,6 @@
 # kind-ingress
 
-A local multi-cluster dev environment for unum apps. kind clusters sit behind Traefik, and every service gets a URL that
+A local multi-cluster dev environment for local apps. kind clusters sit behind Traefik, and every service gets a URL that
 says where it lives:
 
     <service>.<namespace>.<cluster>.localhost
