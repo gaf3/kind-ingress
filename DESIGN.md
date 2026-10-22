@@ -1,6 +1,6 @@
 # Design
 
-Notes from the design talk, 2026-10-11. Milestones 1 and 2 are built. Milestone 3 is written, proven only when `make test-cross` passes.
+Notes from the design talk, 2026-10-11. Milestones 1, 2 and 3 are built.
 
 ## Names
 
@@ -13,8 +13,8 @@ Notes from the design talk, 2026-10-11. Milestones 1 and 2 are built. Milestone 
    take the router role. Route changes must reload without a restart; file events across the Docker Desktop mount are
    untested, so write the file inside the container if they fail.
 3. Calls between services: rewrite `*.localhost` to the router in each cluster's CoreDNS so a pod can use the public name,
-   in or across clusters. Written (#2): `rewrite name regex ^(.+)\.localhost\.$ ingress-control-plane. answer auto`,
-   with the hub's Traefik Service on node ports 80/443 so pods reach it on 80. Done only when `make test-cross` passes.
+   in or across clusters. Built (#2): `rewrite name regex ^(.+)\.localhost\.$ ingress-control-plane. answer auto`,
+   with the hub's Traefik Service on node ports 80/443 so pods reach it on 80. Proven by `make test-cross`.
 
 ## Control plane (not built)
 
