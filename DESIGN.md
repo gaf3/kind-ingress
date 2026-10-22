@@ -1,6 +1,6 @@
 # Design
 
-Notes from the design talk, 2026-10-11. Only milestone 1 (one cluster, Traefik, a service answering) is built.
+Notes from the design talk, 2026-10-11. Milestones 1, 2 and 3 are built.
 
 ## Names
 
@@ -13,7 +13,8 @@ Notes from the design talk, 2026-10-11. Only milestone 1 (one cluster, Traefik, 
    take the router role. Route changes must reload without a restart; file events across the Docker Desktop mount are
    untested, so write the file inside the container if they fail.
 3. Calls between services: rewrite `*.localhost` to the router in each cluster's CoreDNS so a pod can use the public name,
-   in or across clusters. Unproven. Done only when a test pod does it. See the ouroboros project for the Ingress to CoreDNS pattern.
+   in or across clusters. Built (#2): `rewrite name regex ^(.+)\.localhost\.$ ingress-control-plane. answer auto`,
+   with the hub's Traefik Service on node ports 80/443 so pods reach it on 80. Proven by `make test-cross`.
 
 ## Control plane (not built)
 
