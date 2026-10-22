@@ -1,0 +1,17 @@
+# The hub is the base with its Traefik Service on node ports 80 and 443 instead of 30080 and 30443.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../base
+patches:
+- target:
+    kind: Service
+    name: traefik
+    namespace: traefik
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 80
+    - op: replace
+      path: /spec/ports/1/nodePort
+      value: 443
