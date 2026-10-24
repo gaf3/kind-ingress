@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- Every cluster comes with a MySQL 8.4 (`mysql.mysql:3306`, root, password `root`, local only). Its data is `~/.kind-data/<name>` on the host, mounted into the node at `/data` by kind's `extraMounts`, so it survives deleting and making the cluster again. Apps create their own databases as root on first deploy; cluster setup knows nothing about them.
+- `make down NAME=` deletes the cluster and keeps the data. `make wipe NAME=` deletes the data, and refuses while the cluster is up. `make scatter` keeps data too.
+- `make cluster` fails with the fix if an existing cluster has no `/data` mount, because MySQL would otherwise write to the node's own disk and lose it. The mount only happens when the cluster is made: delete and make an older cluster again.
+- `make test-data` runs a throwaway app that creates its database if missing, migrates and writes a row, logging each. `make test-persist` wipes, makes the cluster, deploys, deletes the cluster, makes it again and deploys again, checking the database exists and the first row is still there.
+
 ## 0.2.0
 
 - Pods use the public names: every cluster's CoreDNS answers `*.localhost` with the hub's node, `ingress-control-plane`, so a pod calls `<service>.<namespace>.<cluster>.localhost` the same way a browser does, in or across clusters (#2).
