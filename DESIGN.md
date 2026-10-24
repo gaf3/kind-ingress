@@ -1,20 +1,16 @@
 # Design
 
-Notes from the design talk, 2026-10-11. Milestones 1, 2 and 3 are built.
+Notes from the design talk, 2026-10-11.
 
 ## Names
 
-`<service>.<namespace>.<cluster>.localhost`. Apps ship a plain Ingress with that host. No DNS install, no dnsmasq.
+A `.localhost` host, such as `<service>.localhost`. Apps ship a plain Ingress with that host. No DNS install, no dnsmasq.
 
 ## Milestones
 
 1. One cluster, Traefik, a service answering. Built.
-2. Many clusters: a router owns host port 80 and sends `*.<cluster>.localhost` to that cluster's ingress. Any cluster can
-   take the router role. Route changes must reload without a restart; file events across the Docker Desktop mount are
-   untested, so write the file inside the container if they fail.
-3. Calls between services: rewrite `*.localhost` to the router in each cluster's CoreDNS so a pod can use the public name,
-   in or across clusters. Built (#2): `rewrite name regex ^(.+)\.localhost\.$ ingress-control-plane. answer auto`,
-   with the hub's Traefik Service on node ports 80/443 so pods reach it on 80. Proven by `make test-cross`.
+2. Many clusters behind a router, and pods calling services by their public names, were built and then removed in 0.3.0:
+   this repo makes the one ingress cluster and nothing else. See 0.2.0 in git history (#3) if it comes back.
 
 ## Control plane (not built)
 
