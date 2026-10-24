@@ -1,3 +1,4 @@
+# __DATA__ is ~/.kind-data/<name>, mounted at /data; make cluster fills it in. Only applied when the cluster is made.
 # The hub: the only cluster that listens on the host. Its Traefik takes ports 80 and 443 and routes
 # *.<cluster>.localhost to the other clusters by their node's container name on the kind network.
 # Its Traefik Service is a NodePort on 80 and 443 themselves, so pods on the kind network reach
@@ -9,6 +10,9 @@ apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
   image: kindest/node:v1.35.0
+  extraMounts:
+  - hostPath: __DATA__
+    containerPath: /data
   kubeadmConfigPatches:
   - |
     kind: ClusterConfiguration

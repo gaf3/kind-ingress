@@ -1,6 +1,6 @@
 # Design
 
-Notes from the design talk, 2026-10-11. Milestones 1, 2 and 3 are built.
+Notes from the design talk, 2026-10-11. Milestones 1, 2 and 3 are built, and every cluster has a persistent MySQL.
 
 ## Names
 
@@ -39,4 +39,4 @@ scenario repo, built later, owns topologies: one unum, or three clusters testing
 
 ## Open
 
-Data that must survive a `kill` has to live outside the cluster. Decide per service. View-only versus controls on the web page.
+Data that must survive a `kill` has to live outside the cluster. MySQL is done: `~/.kind-data/<name>` is mounted into every node at `/data`. Other services decide per service, and can use the same directory. View-only versus controls on the web page.

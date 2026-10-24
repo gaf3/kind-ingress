@@ -1,6 +1,10 @@
 # Any other cluster: listens on nothing on the host. The hub reaches its Traefik NodePort 30080 by container name.
+# __DATA__ is ~/.kind-data/<name>, mounted at /data; make cluster fills it in. Only applied when the cluster is made.
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
   image: kindest/node:v1.35.0
+  extraMounts:
+  - hostPath: __DATA__
+    containerPath: /data
