@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+- One cluster only: `ingress`, made with `kind create cluster --name ingress --config ingress/kind.yaml` and `kubectl apply -k ingress`. The folder `ingress/` is a kustomize base other repos can reference.
+- Removed the multi-cluster pieces: other clusters, routes to them, the CoreDNS `*.localhost` rewrite, the widened node port range, the node ports on 80 and 443, `make test-cross`, `scatter` and the cluster-name conventions. The Makefile keeps only `vendor`.
+- Traefik is on node ports 30080 and 30443, mapped to host ports 80 and 443 by kind.
+
 ## 0.2.0
 
 - Pods use the public names: every cluster's CoreDNS answers `*.localhost` with the hub's node, `ingress-control-plane`, so a pod calls `<service>.<namespace>.<cluster>.localhost` the same way a browser does, in or across clusters (#2).

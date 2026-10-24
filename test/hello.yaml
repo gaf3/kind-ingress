@@ -1,5 +1,5 @@
 # Throwaway service to prove the whole path: browser -> host 80 -> Traefik -> Ingress -> pod.
-# __CLUSTER__ is replaced with the cluster name by make test.
+# Apply it: kubectl --context kind-ingress apply -f test/hello.yaml, then curl http://hello.default.localhost/
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,7 +36,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: hello.default.__CLUSTER__.localhost
+  - host: hello.default.localhost
     http:
       paths:
       - path: /
